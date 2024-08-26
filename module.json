@@ -1,0 +1,56 @@
+{
+  "id": "pf2e-kingmaker-helper",
+  "title": "Pf2e Kingmaker Helper",
+  "description": "",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Reyzor",
+      "url": "https://www.patreon.com/Reyzor1991",
+      "discord": "reyzor1991"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "esmodules": [
+    "main.js"
+  ],
+  "styles": [
+    "main.css"
+  ],
+  "packFolders": [],
+  "packs": [],
+  "compatibility": {
+    "minimum": "12.330",
+    "verified": "12.330"
+  },
+  "socket": true,
+  "url": "https://github.com/reyzor1991/pf2e-wiki/wiki/Pf2e-Kingmaker-Helper",
+  "manifest": "https://www.dropbox.com/scl/fi/0xptmhlku2xkk51tb3ih9/module.json?rlkey=hk0giwtnw8rr01xu51me5e8zx&st=yjkzl5o4&dl=1",
+  "download": "https://www.dropbox.com/scl/fi/kdv6flwzqctimz19zq66l/pf2e-kingmaker-helper.zip?rlkey=x22w4b3w5yatr6cm5rlh03y06&st=63lbiuu8&dl=1",
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "manifest": "https://github.com/foundryvtt/pf2e/releases/latest/download/system.json",
+        "compatibility": {
+          "minimum": "6.2.1",
+          "verified": "6.2.1"
+        }
+      }
+    ],
+    "requires": [
+      {
+        "id": "colorsettings",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/ardittristan/VTTColorSettings/master/module.json"
+      }
+    ]
+  }
+}
