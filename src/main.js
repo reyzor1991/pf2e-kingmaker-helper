@@ -226,8 +226,8 @@ Hooks.on("canvasReady", () => {
     game.coloredAndIconsLayer.draw()
 });
 
-Hooks.on("updateSetting", (a,b) => {
-    if (a.key === 'pf2e-kingmaker.state') {
+Hooks.on("updateSetting", (setting) => {
+    if (setting.key === 'pf2e-kingmaker.state') {
         game.coloredAndIconsLayer?.draw()
     }
 });
