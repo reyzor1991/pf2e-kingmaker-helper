@@ -1,5 +1,11 @@
 {
   "pf2e-kingmaker-helper": {
-    "show-colored-hex": "Show colored hexes"
+    "show-colored-hex": "Show colored hexes",
+    "FEATURES": {
+      "cs_campsite": "Prepared campsite (Critical Success)",
+      "s_campsite": "Prepared campsite (Success)",
+      "cf_campsite": "Prepared campsite (Critical Failure)",
+      "f_campsite": "Prepared campsite (Failure)"
+    }
   }
 }
