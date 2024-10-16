@@ -180,6 +180,9 @@ Hooks.on('init', function () {
 })
 
 Hooks.on("getSceneControlButtons", buttons => {
+    if (typeof kingmaker === "undefined") {
+        return;
+    }
     if (!kingmaker?.region?.active) return;
     const tokens = buttons.find(b => b.name === "token");
 
