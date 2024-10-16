@@ -1,3 +1,6 @@
+## Version 0.1.2
+- Fix show icon
+
 ## Version 0.1.1
 - Show campsite icons for crit rolls
 

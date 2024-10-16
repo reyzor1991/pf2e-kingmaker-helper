@@ -180,7 +180,7 @@ Hooks.on('init', function () {
 })
 
 Hooks.on("getSceneControlButtons", buttons => {
-    if (!kingmaker.region?.active) return;
+    if (!kingmaker?.region?.active) return;
     const tokens = buttons.find(b => b.name === "token");
 
     let btn = {
