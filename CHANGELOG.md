@@ -1,3 +1,6 @@
+## Version 0.1.3
+- PFRPG 2e: Kingdom Building, Camping & Weather - add compatibility - changing regions
+
 ## Version 0.1.2
 - Fix show icon
 

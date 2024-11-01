@@ -349,13 +349,17 @@ Hooks.on("createChatMessage", async (message) => {
     }
 
     let token = game.actors.party.getActiveTokens(true, true)[0]
-    if (!token) {return;}
+    if (!token) {
+        return;
+    }
 
     let hex = kingmaker.region.hexes
-        .map(h=>[createPolygon(h), h])
-        .filter(hh=>hh[0].contains(token.center.x, token.center.y))
-        .map(hh=>hh[1])[0]
-    if (!hex) {return;}
+        .map(h => [createPolygon(h), h])
+        .filter(hh => hh[0].contains(token.center.x, token.center.y))
+        .map(hh => hh[1])[0]
+    if (!hex) {
+        return;
+    }
 
     let cA = CampsiteActivities.load();
     let data = cA.data;
@@ -373,3 +377,45 @@ Hooks.on("createChatMessage", async (message) => {
     await cA.update()
     game.coloredAndIconsLayer?.draw()
 });
+
+Hooks.on('preUpdateToken', (tokenDoc, data, _options, _userId) => {
+    if (!tokenDoc?.actor?.isOfType('party')) {
+        return;
+    }
+    let sheet = game.actors.getName("Camping Sheet");
+    let settings = sheet?.flags?.['pf2e-kingmaker-tools']?.['camping-sheet'];
+    let sRegions = settings?.regionSettings?.regions || [];
+    if (!sheet || !settings || !sRegions.length) {
+        return;
+    }
+
+    let oldCenter = foundry.utils.deepClone(tokenDoc.center)
+    let b = foundry.utils.deepClone(tokenDoc.bounds)
+    let newCenter = {
+        x: (data.x || tokenDoc.x) + b.width / 2,
+        y: (data.y || tokenDoc.y) + b.height / 2,
+    }
+
+    let polygons = kingmaker.region.hexes
+        .map(h => [createPolygon(h), h]);
+
+    let oldZone = polygons
+        .filter(hh => hh[0].contains(oldCenter.x, oldCenter.y))
+        .map(hh => hh[1])[0]?.zone
+
+    let newZone = polygons
+        .filter(hh => hh[0].contains(newCenter.x, newCenter.y))
+        .map(hh => hh[1])[0]?.zone
+
+    if (!newZone || !oldZone) {
+        return
+    }
+
+    if (newZone.id !== oldZone.id) {
+        let zoneName = game.i18n.localize(newZone.label);
+        if (sRegions.find(s=>s.name === zoneName)) {
+            sheet.update({"flags.pf2e-kingmaker-tools.camping-sheet.currentRegion": zoneName})
+        }
+    }
+})
+
