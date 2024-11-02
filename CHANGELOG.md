@@ -1,3 +1,7 @@
+## Version 0.1.4
+- Add 4 hours when move between hexes (setting)
+- If undo token then -4 hours
+
 ## Version 0.1.3
 - PFRPG 2e: Kingdom Building, Camping & Weather - add compatibility - changing regions
 

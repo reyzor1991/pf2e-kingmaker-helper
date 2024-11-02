@@ -169,6 +169,13 @@ Hooks.on('init', function () {
             game.coloredAndIconsLayer?.draw()
         }
     });
+    game.settings.register(moduleName, "addHours", {
+        name: "Add 4 hours when move between hexes",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
 
     game.settings.register(moduleName, "data", {
         scope: "world",
@@ -378,6 +385,22 @@ Hooks.on("createChatMessage", async (message) => {
     game.coloredAndIconsLayer?.draw()
 });
 
+Hooks.on('preUpdateToken', (tokenDoc, data, options, _userId) => {
+    if (!tokenDoc?.actor?.isOfType('party')) {
+        return;
+    }
+    if (!(data.x || data.y)) {
+        return;
+    }
+    if (!game.settings.get(moduleName, "addHours")) {return;}
+
+    if (options.isUndo) {
+        game.time.advance(-14400)
+    } else {
+        game.time.advance(14400)
+    }
+});
+
 Hooks.on('preUpdateToken', (tokenDoc, data, _options, _userId) => {
     if (!tokenDoc?.actor?.isOfType('party')) {
         return;
@@ -413,7 +436,7 @@ Hooks.on('preUpdateToken', (tokenDoc, data, _options, _userId) => {
 
     if (newZone.id !== oldZone.id) {
         let zoneName = game.i18n.localize(newZone.label);
-        if (sRegions.find(s=>s.name === zoneName)) {
+        if (sRegions.find(s => s.name === zoneName)) {
             sheet.update({"flags.pf2e-kingmaker-tools.camping-sheet.currentRegion": zoneName})
         }
     }
