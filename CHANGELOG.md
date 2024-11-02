@@ -1,3 +1,6 @@
+## Version 0.1.5
+- Save stata of btn
+
 ## Version 0.1.4
 - Add 4 hours when move between hexes (setting)
 - If undo token then -4 hours

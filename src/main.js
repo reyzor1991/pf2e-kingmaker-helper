@@ -184,6 +184,14 @@ Hooks.on('init', function () {
         type: CampsiteActivities,
         default: {}
     });
+
+    game.settings.register(moduleName, "show-colored-hex", {
+        scope: "world",
+        config: false,
+        requiresReload: false,
+        type: Boolean,
+        default: false
+    });
 })
 
 Hooks.on("getSceneControlButtons", buttons => {
@@ -199,9 +207,10 @@ Hooks.on("getSceneControlButtons", buttons => {
         icon: "fa-solid fa-droplet",
         visible: true,
         toggle: true,
-        active: !!game.coloredAndIconsLayer?.visible,
+        active: !!game.settings.get(moduleName, "show-colored-hex"),
         onClick: async () => {
-            game.coloredAndIconsLayer.visible = !game.coloredAndIconsLayer.visible;
+            await game.settings.set(moduleName, "show-colored-hex", !game.settings.get(moduleName, "show-colored-hex"))
+            game.coloredAndIconsLayer.visible = game.settings.get(moduleName, "show-colored-hex");
             game.coloredAndIconsLayer.draw();
         }
     }
@@ -212,7 +221,7 @@ Hooks.on("getSceneControlButtons", buttons => {
 class ColoredAndIconsLayer extends PIXI.Container {
     constructor() {
         super();
-        this.visible = false;
+        this.visible = game.settings.get(moduleName, "show-colored-hex");
     }
 
     draw() {
