@@ -311,9 +311,11 @@ function setImage(image, graphics, hex, correction, position, scaledSize) {
 }
 
 Hooks.on("canvasReady", () => {
-    game.coloredAndIconsLayer = new ColoredAndIconsLayer();
-    canvas.interface.grid.addChild(game.coloredAndIconsLayer);
-    game.coloredAndIconsLayer.draw()
+    if (kingmaker?.region?.active) {
+        game.coloredAndIconsLayer = new ColoredAndIconsLayer();
+        canvas.interface.grid.addChild(game.coloredAndIconsLayer);
+        game.coloredAndIconsLayer.draw()
+    }
 });
 
 Hooks.on("updateSetting", (setting) => {

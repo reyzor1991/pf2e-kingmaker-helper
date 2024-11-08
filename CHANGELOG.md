@@ -1,3 +1,6 @@
+## Version 0.1.6
+- Fix rendering icons only for Stolen Lands scene
+
 ## Version 0.1.5
 - Save stata of btn
 

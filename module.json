@@ -2,7 +2,7 @@
   "id": "pf2e-kingmaker-helper",
   "title": "Pf2e Kingmaker Helper",
   "description": "",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "authors": [
     {
       "name": "Reyzor",
@@ -27,7 +27,7 @@
   "packs": [],
   "compatibility": {
     "minimum": "12.330",
-    "verified": "12.330"
+    "verified": "12.331"
   },
   "socket": true,
   "url": "https://github.com/reyzor1991/pf2e-wiki/wiki/Pf2e-Kingmaker-Helper",
@@ -41,7 +41,7 @@
         "manifest": "https://github.com/foundryvtt/pf2e/releases/latest/download/system.json",
         "compatibility": {
           "minimum": "6.2.1",
-          "verified": "6.2.1"
+          "verified": "6.6.1"
         }
       }
     ],
