@@ -1,3 +1,6 @@
+## Version 0.1.7
+- Fix detecting premium module
+
 ## Version 0.1.6
 - Fix rendering icons only for Stolen Lands scene
 

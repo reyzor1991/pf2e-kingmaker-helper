@@ -186,7 +186,7 @@ Hooks.on('init', function () {
     });
 
     game.settings.register(moduleName, "show-colored-hex", {
-        scope: "world",
+        scope: "client",
         config: false,
         requiresReload: false,
         type: Boolean,
@@ -311,6 +311,9 @@ function setImage(image, graphics, hex, correction, position, scaledSize) {
 }
 
 Hooks.on("canvasReady", () => {
+    if (typeof kingmaker === "undefined") {
+        return;
+    }
     if (kingmaker?.region?.active) {
         game.coloredAndIconsLayer = new ColoredAndIconsLayer();
         canvas.interface.grid.addChild(game.coloredAndIconsLayer);
