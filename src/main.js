@@ -66,7 +66,7 @@ const hexToAlpha = (alphaHexString) => {
 
 function hexes(filter) {
     return Object.entries(foundry.utils.deepClone(game.settings.get("pf2e-kingmaker", "state").hexes))
-        .filter((data) => filter(data[1]))
+        .filter((data) => filter(data[1], Number(data[0])))
         .map(a => Number(a[0]))
         .map(n => kingmaker.region.hexes.get(n))
         .filter(h => !!h);
@@ -245,11 +245,17 @@ class ColoredAndIconsLayer extends PIXI.Container {
     }
 
     #drawResourceIcon(graphics) {
-        let all = hexes(h => !!h.commodity && h.showResources);
-        all = [...all, ...hexes(h => h.features && h.features.length > 0), ...hexes(h => h.camp)]
+        let additionalData = CampsiteActivities.load().data.reduce((acc, cur) => {
+            acc[cur.key] = cur;
+            return acc
+        }, {});
 
-
-        let additionalData = CampsiteActivities.load().data;
+        let all = hexes(
+            (h, k) => (!!h.commodity && h.showResources)
+                || (h.features && h.features.length > 0)
+                || (!!h.camp)
+                || (!!additionalData[k])
+        );
 
         let scaledSize = ORIGIN_ICON_SIZE * SCALE;
         let correction = scaledSize / 2
@@ -274,7 +280,7 @@ class ColoredAndIconsLayer extends PIXI.Container {
                 position += 1;
             }
 
-            let createCampsite = additionalData.find(ad => ad.key === hex.key);
+            let createCampsite = additionalData[hex.key];
             if (createCampsite) {
                 let image = new PIXI.Sprite(
                     PIXI.Texture.from(ADDITIONAL_ACTIVITIES[createCampsite.result].img)
@@ -396,6 +402,24 @@ Hooks.on("createChatMessage", async (message) => {
         cA.updateSource({data})
     }
     await cA.update()
+
+    if (!kingmaker.state.hexes[hex.key]) {
+        await kingmaker.state.updateSource({
+            hexes: {
+                [hex.key]: {
+                    camp: "",
+                    claimed: false,
+                    cleared: false,
+                    commodity: "",
+                    exploration: 0,
+                    features: [],
+                    showResources: false
+                }
+            }
+        });
+        await kingmaker.state.save();
+    }
+
     game.coloredAndIconsLayer?.draw()
 });
 
@@ -406,7 +430,9 @@ Hooks.on('preUpdateToken', (tokenDoc, data, options, _userId) => {
     if (!(data.x || data.y)) {
         return;
     }
-    if (!game.settings.get(moduleName, "addHours")) {return;}
+    if (!game.settings.get(moduleName, "addHours")) {
+        return;
+    }
 
     if (options.isUndo) {
         game.time.advance(-14400)

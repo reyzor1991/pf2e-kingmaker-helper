@@ -1,3 +1,6 @@
+## Version 0.1.8
+- Fix rendering icon camp
+
 ## Version 0.1.7
 - Fix detecting premium module
 
