@@ -371,7 +371,7 @@ Hooks.on("createChatMessage", async (message) => {
     if (!message?.flags?.pf2e?.context?.options?.includes("action:prepare-campsite")) {
         return;
     }
-    if (!["criticalFailure", "criticalSuccess"].includes(message.flags.pf2e.context.outcome)) {
+    if (!["criticalFailure", "criticalSuccess", "failure", "success"].includes(message.flags.pf2e.context.outcome)) {
         return;
     }
 
