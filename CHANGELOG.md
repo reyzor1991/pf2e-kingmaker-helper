@@ -1,3 +1,10 @@
+## Version 0.2.0
+- Add settlement color to settings. Get info from scene by key `hexKey`
+- Examples:
+- - Set hexKey - scene.setFlag("pf2e-kingmaker-helper", 'hexKey', 1020)
+- - Unset hexKey - scene.unsetFlag("pf2e-kingmaker-helper", 'hexKey')
+- - If color is not set, edit hex and save it 
+
 ## Version 0.1.9
 - Add failure&success to camp
 

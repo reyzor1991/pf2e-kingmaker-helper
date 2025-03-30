@@ -159,6 +159,17 @@ Hooks.on('init', function () {
         },
         // insertAfter: "myModule.mySetting"
     })
+    new window.Ardittristan.ColorSetting(moduleName, "settlementHexColor", {
+        name: "Hex Color - Settlement",
+        label: "Color Picker",
+        restricted: false,
+        defaultColor: "#8c44af97",
+        scope: "client",
+        onChange: (value) => {
+            game.coloredAndIconsLayer?.draw()
+        },
+        // insertAfter: "myModule.mySetting"
+    })
     game.settings.register(moduleName, "widthPolygon", {
         name: "Thickness of outline around the hex",
         scope: "client",
@@ -237,6 +248,18 @@ class ColoredAndIconsLayer extends PIXI.Container {
         this.#drawColorByType(g, h => h.exploration === 1 && !h.claimed, getColor("reconnoiteredHexColor"));
         this.#drawColorByType(g, h => h.exploration === 2 && !h.claimed, getColor("mappedHexColor"));
         this.#drawColorByType(g, h => h.claimed, getColor("claimedHexColor"));
+        if (game.modules.get("pf2e-kingmaker-tools").active) {
+            let kingdom = game.actors.party.getFlag("pf2e-kingmaker-tools", "kingdom-sheet");
+            if (kingdom) {
+                let keyIds = kingdom.settlements?.map(s => s.hexId)?.filter(s => !!s) || []
+                if (!keyIds.length) {
+                    keyIds = game.scenes
+                        .map(s => s.getFlag(moduleName, 'hexKey'))
+                        .filter(s => !!s)
+                }
+                this.#drawColorByType(g, (data, key) => keyIds.includes(key), getColor("settlementHexColor"));
+            }
+        }
         this.#drawResourceIcon(g)
     }
 
