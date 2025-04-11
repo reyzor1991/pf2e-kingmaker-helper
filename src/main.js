@@ -257,7 +257,7 @@ class ColoredAndIconsLayer extends PIXI.Container {
         this.#drawColorByType(g, h => h.exploration === 1 && !h.claimed, getColor("reconnoiteredHexColor"));
         this.#drawColorByType(g, h => h.exploration === 2 && !h.claimed, getColor("mappedHexColor"));
         this.#drawColorByType(g, h => h.claimed, getColor("claimedHexColor"));
-        if (game.modules.get("pf2e-kingmaker-tools").active) {
+        if (game.modules.get("pf2e-kingmaker-tools")?.active) {
             let kingdom = game.actors.party.getFlag("pf2e-kingmaker-tools", "kingdom-sheet");
             if (kingdom) {
                 let keyIds = kingdom.settlements?.map(s => s.hexId)?.filter(s => !!s) || []
