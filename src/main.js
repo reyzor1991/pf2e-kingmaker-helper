@@ -188,6 +188,15 @@ Hooks.on('init', function () {
         type: Boolean
     });
 
+    game.settings.register(moduleName, "alwaysShowIcon", {
+        name: "Always show all icons",
+        scope: "world",
+        config: true,
+        default: false,
+        requiresReload: true,
+        type: Boolean
+    });
+
     game.settings.register(moduleName, "data", {
         scope: "world",
         config: false,
@@ -274,7 +283,7 @@ class ColoredAndIconsLayer extends PIXI.Container {
         }, {});
 
         let all = hexes(
-            (h, k) => (!!h.commodity && h.showResources)
+            (h, k) => (!!h.commodity && (h.showResources || game.settings.get(moduleName, "alwaysShowIcon")))
                 || (h.features && h.features.length > 0)
                 || (!!h.camp)
                 || (!!additionalData[k])
@@ -288,14 +297,14 @@ class ColoredAndIconsLayer extends PIXI.Container {
             if (hex.data.page && game.user.isGM) {
                 position += 1;
             }
-            if (hex.data.commodity && hex.data.showResources) {
+            if (hex.data.commodity && (hex.data.showResources || game.settings.get(moduleName, "alwaysShowIcon"))) {
                 let image = new PIXI.Sprite(
                     PIXI.Texture.from(kingmaker.CONST.COMMODITIES[hex.data.commodity].img)
                 );
                 setImage(image, graphics, hex, correction, position, scaledSize)
                 position += 1;
             }
-            if (hex.data.camp && hex.data.showResources) {
+            if (hex.data.camp && (hex.data.showResources || game.settings.get(moduleName, "alwaysShowIcon"))) {
                 let image = new PIXI.Sprite(
                     PIXI.Texture.from(kingmaker.CONST.CAMPS[hex.data.camp].img)
                 );
@@ -312,7 +321,7 @@ class ColoredAndIconsLayer extends PIXI.Container {
                 position += 1;
             }
 
-            let features = hex.data.features.filter(f => f.discovered);
+            let features = hex.data.features.filter(f => f.discovered || game.settings.get(moduleName, "alwaysShowIcon"));
 
             for (let feature of features) {
                 if (position > 8) {

@@ -1,3 +1,6 @@
+## Version 0.2.1
+- Add setting for always show all icons 
+
 ## Version 0.2.0
 - Add settlement color to settings. Get info from scene by key `hexKey`
 - Examples:
