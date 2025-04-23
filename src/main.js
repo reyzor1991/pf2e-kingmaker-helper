@@ -197,6 +197,17 @@ Hooks.on('init', function () {
         type: Boolean
     });
 
+    game.settings.register(moduleName, "iconText", {
+        name: "Add text to icons",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange: value => {
+            game.coloredAndIconsLayer?.draw()
+        }
+    });
+
     game.settings.register(moduleName, "data", {
         scope: "world",
         config: false,
@@ -292,53 +303,124 @@ class ColoredAndIconsLayer extends PIXI.Container {
         let scaledSize = ORIGIN_ICON_SIZE * SCALE;
         let correction = scaledSize / 2
 
-        let position = 0;
         for (const hex of all) {
-            if (hex.data.page && game.user.isGM) {
-                position += 1;
-            }
+
+            let maxSize = hex.data.page && game.user.isGM ? 8 : 9
+            let icons = []
+
             if (hex.data.commodity && (hex.data.showResources || game.settings.get(moduleName, "alwaysShowIcon"))) {
-                let image = new PIXI.Sprite(
-                    PIXI.Texture.from(kingmaker.CONST.COMMODITIES[hex.data.commodity].img)
-                );
-                setImage(image, graphics, hex, correction, position, scaledSize)
-                position += 1;
+                icons.push({
+                    image: new PIXI.Sprite(
+                        PIXI.Texture.from(kingmaker.CONST.COMMODITIES[hex.data.commodity].img)
+                    ),
+                    label: kingmaker.CONST.COMMODITIES[hex.data.commodity].label
+                })
             }
             if (hex.data.camp && (hex.data.showResources || game.settings.get(moduleName, "alwaysShowIcon"))) {
-                let image = new PIXI.Sprite(
-                    PIXI.Texture.from(kingmaker.CONST.CAMPS[hex.data.camp].img)
-                );
-                setImage(image, graphics, hex, correction, position, scaledSize)
-                position += 1;
+                icons.push({
+                    image: new PIXI.Sprite(
+                        PIXI.Texture.from(kingmaker.CONST.CAMPS[hex.data.camp].img)
+                    ),
+                    label: kingmaker.CONST.CAMPS[hex.data.camp].label
+                })
             }
 
             let createCampsite = additionalData[hex.key];
             if (createCampsite) {
-                let image = new PIXI.Sprite(
-                    PIXI.Texture.from(ADDITIONAL_ACTIVITIES[createCampsite.result].img)
-                );
-                setImage(image, graphics, hex, correction, position, scaledSize)
-                position += 1;
+                icons.push({
+                    image: new PIXI.Sprite(
+                        PIXI.Texture.from(ADDITIONAL_ACTIVITIES[createCampsite.result].img)
+                    ),
+                    label: ''
+                })
             }
 
             let features = hex.data.features.filter(f => f.discovered || game.settings.get(moduleName, "alwaysShowIcon"));
-
             for (let feature of features) {
-                if (position > 8) {
+                if (icons.length >= maxSize) {
                     break
                 }
-                let image = PIXI.Sprite.from(
-                    kingmaker.CONST.FEATURES[feature.type].img
-                );
-                setImage(image, graphics, hex, correction, position, scaledSize)
-                position += 1;
+                icons.push({
+                    image: PIXI.Sprite.from(
+                        kingmaker.CONST.FEATURES[feature.type].img
+                    ),
+                    label: kingmaker.CONST.FEATURES[feature.type].label
+                })
             }
-            position = 0;
+            handleIcons(icons, graphics, hex, correction, scaledSize);
         }
     }
 }
 
-function setImage(image, graphics, hex, correction, position, scaledSize) {
+function handleIcons(icons, graphics, hex, correction, scaledSize) {
+    if (!icons.length) {
+        return;
+    }
+    if (hex.data.page && game.user.isGM) {
+        handleGmIcons(icons, graphics, hex, correction, scaledSize);
+    } else {
+        handlePcIcons(icons, graphics, hex, correction, scaledSize);
+    }
+}
+
+function handleGmIcons(icons, graphics, hex, correction, scaledSize) {
+    if (icons.length === 1) {
+        setImage(icons[0].image, graphics, hex, correction, 6, scaledSize, icons[0].label)
+    } else if (icons.length === 2) {
+        setImage(icons[0].image, graphics, hex, correction, 5, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 1, scaledSize, icons[1].label)
+    } else if (icons.length === 3) {
+        setImage(icons[0].image, graphics, hex, correction, 2, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 4, scaledSize, icons[1].label)
+        setImage(icons[2].image, graphics, hex, correction, 7, scaledSize, icons[2].label)
+    } else if (icons.length === 4) {
+        setImage(icons[0].image, graphics, hex, correction, 2, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 4, scaledSize, icons[1].label)
+        setImage(icons[2].image, graphics, hex, correction, 6, scaledSize, icons[2].label)
+        setImage(icons[3].image, graphics, hex, correction, 8, scaledSize, icons[3].label)
+    } else {
+        icons.forEach((i, index) => {
+            setImage(i.image, graphics, hex, correction, index+1, scaledSize, i.label)
+        });
+    }
+}
+
+function handlePcIcons(icons, graphics, hex, correction, scaledSize) {
+    if (icons.length === 1) {
+        setImage(icons[0].image, graphics, hex, correction, 0, scaledSize, icons[0].label)
+    } else if (icons.length === 2) {
+        setImage(icons[0].image, graphics, hex, correction, 5, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 1, scaledSize, icons[1].label)
+    } else if (icons.length === 3) {
+        setImage(icons[0].image, graphics, hex, correction, 2, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 4, scaledSize, icons[1].label)
+        setImage(icons[2].image, graphics, hex, correction, 7, scaledSize, icons[2].label)
+    } else if (icons.length === 4) {
+        setImage(icons[0].image, graphics, hex, correction, 2, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 4, scaledSize, icons[1].label)
+        setImage(icons[2].image, graphics, hex, correction, 6, scaledSize, icons[2].label)
+        setImage(icons[3].image, graphics, hex, correction, 8, scaledSize, icons[3].label)
+    } else if (icons.length === 5) {
+        setImage(icons[0].image, graphics, hex, correction, 0, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 2, scaledSize, icons[1].label)
+        setImage(icons[2].image, graphics, hex, correction, 4, scaledSize, icons[2].label)
+        setImage(icons[3].image, graphics, hex, correction, 6, scaledSize, icons[3].label)
+        setImage(icons[4].image, graphics, hex, correction, 8, scaledSize, icons[4].label)
+    } else if (icons.length === 6) {
+        setImage(icons[0].image, graphics, hex, correction, 4, scaledSize, icons[0].label)
+        setImage(icons[1].image, graphics, hex, correction, 3, scaledSize, icons[1].label)
+        setImage(icons[2].image, graphics, hex, correction, 2, scaledSize, icons[2].label)
+        setImage(icons[3].image, graphics, hex, correction, 6, scaledSize, icons[3].label)
+        setImage(icons[4].image, graphics, hex, correction, 7, scaledSize, icons[4].label)
+        setImage(icons[5].image, graphics, hex, correction, 8, scaledSize, icons[5].label)
+    } else {
+        icons.forEach((i, index) => {
+            setImage(i.image, graphics, hex, correction, index, scaledSize, i.label)
+        });
+    }
+}
+
+function setImage(image, graphics, hex, correction, position, scaledSize, labelText = undefined) {
     image.scale.set(SCALE, SCALE)
     let x = hex.center.x - correction;
     let y = hex.center.y - correction;
@@ -346,6 +428,19 @@ function setImage(image, graphics, hex, correction, position, scaledSize) {
     y += (MAP_MOVEMENT[position].y * scaledSize)
     image.position.set(x, y)
     graphics.addChild(image);
+
+    if (labelText && game.settings.get(moduleName, "iconText")) {
+        const style = CONFIG.canvasTextStyle.clone();
+        const dimensions = canvas.dimensions;
+        style.fontSize = dimensions.size >= 200 ? 20 : dimensions.size < 50 ? 12 : 16;
+        style.fill = 'white';
+        style.stroke = 0x000000;
+
+        const text = new PreciseText(game.i18n.localize(labelText), style);
+        text.anchor.set(0.5, 0.5);
+        text.position.set(x + correction, y + (correction * 2));
+        graphics.addChild(text);
+    }
 }
 
 Hooks.on("canvasReady", () => {

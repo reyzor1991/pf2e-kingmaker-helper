@@ -1,3 +1,6 @@
+## Version 0.2.2
+- Add setting - "Add text to icons"
+
 ## Version 0.2.1
 - Add setting for always show all icons 
 
