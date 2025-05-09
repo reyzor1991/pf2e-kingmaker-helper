@@ -230,23 +230,21 @@ Hooks.on("getSceneControlButtons", buttons => {
         return;
     }
     if (!kingmaker?.region?.active) return;
-    const tokens = buttons.find(b => b.name === "token");
 
-    let btn = {
-        name: "show-colored-hex",
+    const tokens = buttons.tokens;
+    tokens.tools.showColoredHex = {
+        name: "showColoredHex",
         title: `${moduleName}.show-colored-hex`,
         icon: "fa-solid fa-droplet",
         visible: true,
         toggle: true,
         active: !!game.settings.get(moduleName, "show-colored-hex"),
-        onClick: async () => {
+        onChange: async () => {
             await game.settings.set(moduleName, "show-colored-hex", !game.settings.get(moduleName, "show-colored-hex"))
             game.coloredAndIconsLayer.visible = game.settings.get(moduleName, "show-colored-hex");
             game.coloredAndIconsLayer.draw();
         }
-    }
-
-    tokens.tools.push(btn);
+    };
 });
 
 class ColoredAndIconsLayer extends PIXI.Container {

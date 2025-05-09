@@ -1,3 +1,6 @@
+## Version 0.3.0
+- v13 (Tested)
+
 ## Version 0.2.2
 - Add setting - "Add text to icons"
 

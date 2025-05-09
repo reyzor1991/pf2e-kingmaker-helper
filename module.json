@@ -2,7 +2,7 @@
   "id": "pf2e-kingmaker-helper",
   "title": "Pf2e Kingmaker Helper",
   "description": "",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "authors": [
     {
       "name": "Reyzor",
@@ -26,13 +26,13 @@
   "packFolders": [],
   "packs": [],
   "compatibility": {
-    "minimum": "12.330",
-    "verified": "12.331"
+    "minimum": "13.342",
+    "verified": "13.342"
   },
   "socket": true,
   "url": "https://github.com/reyzor1991/pf2e-wiki/wiki/Pf2e-Kingmaker-Helper",
-  "manifest": "https://www.dropbox.com/scl/fi/zh8sib2ppczrfve88doe2/module.json?rlkey=6vli4l4afzvpyuzp2xauhvxe3&st=5acxgp3d&dl=1",
-  "download": "https://www.dropbox.com/scl/fi/konm4sdh6z4zw1vwacmjr/pf2e-kingmaker-helper.zip?rlkey=325nugnglqssr6qb7ccszi1vb&st=5v94nwrb&dl=1",
+  "manifest": "https://www.dropbox.com/scl/fi/nzddonsbwih2e17axy289/module.json?rlkey=ikqs6m95psszri5cgxwcvtehh&st=h213dwux&dl=1",
+  "download": "https://www.dropbox.com/scl/fi/34dv8kuttwdn58okv61pa/pf2e-kingmaker-helper.zip?rlkey=nrcw39daw0xft9zu4dd8xd9z0&st=g5j8q9go&dl=1",
   "relationships": {
     "systems": [
       {
@@ -40,8 +40,8 @@
         "type": "system",
         "manifest": "https://github.com/foundryvtt/pf2e/releases/latest/download/system.json",
         "compatibility": {
-          "minimum": "6.2.1",
-          "verified": "6.6.1"
+          "minimum": "7.0.5",
+          "verified": "7.0.5"
         }
       }
     ],
