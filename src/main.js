@@ -139,10 +139,10 @@ Hooks.on('init', function () {
         },
     })
     game.settings.register(moduleName, "claimedHexColor", {
-        name: "Hex Color - Settlement",
-        config: true,
-        defaultColor: "#ff000026",
+        name: "Hex Color - Claimed",
         scope: "client",
+        config: true,
+        default: "#ff000026",
         type: String,
         onChange: (value) => {
             game.coloredAndIconsLayer?.draw()
