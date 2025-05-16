@@ -2,7 +2,7 @@
   "id": "pf2e-kingmaker-helper",
   "title": "Pf2e Kingmaker Helper",
   "description": "",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "authors": [
     {
       "name": "Reyzor",
@@ -41,16 +41,10 @@
         "manifest": "https://github.com/foundryvtt/pf2e/releases/latest/download/system.json",
         "compatibility": {
           "minimum": "7.0.5",
-          "verified": "7.0.5"
+          "verified": "7.0.6"
         }
       }
     ],
-    "requires": [
-      {
-        "id": "colorsettings",
-        "type": "module",
-        "manifest": "https://raw.githubusercontent.com/ardittristan/VTTColorSettings/master/module.json"
-      }
-    ]
+    "requires": []
   }
 }

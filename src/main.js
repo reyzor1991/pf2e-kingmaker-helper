@@ -72,14 +72,6 @@ function hexes(filter) {
         .filter(h => !!h);
 }
 
-Hooks.once('ready', () => {
-    try {
-        window.Ardittristan.ColorSetting.tester
-    } catch {
-        ui.notifications.notify('Please make sure you have the "lib - ColorSettings" module installed and enabled.', "error");
-    }
-});
-
 function fillColor(g, polygons, color, alpha) {
     g.beginFill(color, alpha).lineStyle({color: color, width: game.settings.get(moduleName, "widthPolygon")})
     for (const polygon of polygons) {
@@ -126,49 +118,45 @@ const MAP_MOVEMENT = {
 }
 
 Hooks.on('init', function () {
-    new window.Ardittristan.ColorSetting(moduleName, "reconnoiteredHexColor", {
+    game.settings.register(moduleName, "reconnoiteredHexColor", {
         name: "Hex Color - Reconnoitered",
-        label: "Color Picker",
-        restricted: false,
-        defaultColor: "#00ff0026",
         scope: "client",
+        config: true,
+        default: "#00ff0026",
+        type: String,
         onChange: (value) => {
             game.coloredAndIconsLayer?.draw()
         },
-        // insertAfter: "myModule.mySetting"
     })
-    new window.Ardittristan.ColorSetting(moduleName, "mappedHexColor", {
+    game.settings.register(moduleName, "mappedHexColor", {
         name: "Hex Color - Mapped",
-        label: "Color Picker",
-        restricted: false,
-        defaultColor: "#0000ff26",
         scope: "client",
+        config: true,
+        default: "#0000ff26",
+        type: String,
         onChange: (value) => {
             game.coloredAndIconsLayer?.draw()
         },
-        // insertAfter: "myModule.mySetting"
     })
-    new window.Ardittristan.ColorSetting(moduleName, "claimedHexColor", {
-        name: "Hex Color - Claimed",
-        label: "Color Picker",
-        restricted: false,
+    game.settings.register(moduleName, "claimedHexColor", {
+        name: "Hex Color - Settlement",
+        config: true,
         defaultColor: "#ff000026",
         scope: "client",
+        type: String,
         onChange: (value) => {
             game.coloredAndIconsLayer?.draw()
         },
-        // insertAfter: "myModule.mySetting"
     })
-    new window.Ardittristan.ColorSetting(moduleName, "settlementHexColor", {
+    game.settings.register(moduleName, "settlementHexColor", {
         name: "Hex Color - Settlement",
-        label: "Color Picker",
-        restricted: false,
-        defaultColor: "#8c44af97",
         scope: "client",
+        config: true,
+        default: "#8c44af97",
+        type: String,
         onChange: (value) => {
             game.coloredAndIconsLayer?.draw()
         },
-        // insertAfter: "myModule.mySetting"
     })
     game.settings.register(moduleName, "widthPolygon", {
         name: "Thickness of outline around the hex",
@@ -434,7 +422,7 @@ function setImage(image, graphics, hex, correction, position, scaledSize, labelT
         style.fill = 'white';
         style.stroke = 0x000000;
 
-        const text = new PreciseText(game.i18n.localize(labelText), style);
+        const text = new foundry.canvas.containers.PreciseText(game.i18n.localize(labelText), style);
         text.anchor.set(0.5, 0.5);
         text.position.set(x + correction, y + (correction * 2));
         graphics.addChild(text);

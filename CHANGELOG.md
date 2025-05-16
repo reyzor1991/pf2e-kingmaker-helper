@@ -1,3 +1,6 @@
+## Version 0.3.1
+- Delete broken dependencies to color module
+
 ## Version 0.3.0
 - v13 (Tested)
 
