@@ -1,3 +1,6 @@
+## Version 0.3.3
+- Fix updating regions
+
 ## Version 0.3.2
 - Fix naming of setting
 

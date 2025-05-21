@@ -558,10 +558,9 @@ Hooks.on('preUpdateToken', (tokenDoc, data, _options, _userId) => {
     if (!tokenDoc?.actor?.isOfType('party')) {
         return;
     }
-    let sheet = game.actors.getName("Camping Sheet");
-    let settings = sheet?.flags?.['pf2e-kingmaker-tools']?.['camping-sheet'];
+    let settings = tokenDoc?.actor?.flags?.['pf2e-kingmaker-tools']?.['camping-sheet'];
     let sRegions = settings?.regionSettings?.regions || [];
-    if (!sheet || !settings || !sRegions.length) {
+    if (!settings || !sRegions.length) {
         return;
     }
 
@@ -590,7 +589,7 @@ Hooks.on('preUpdateToken', (tokenDoc, data, _options, _userId) => {
     if (newZone.id !== oldZone.id) {
         let zoneName = game.i18n.localize(newZone.label);
         if (sRegions.find(s => s.name === zoneName)) {
-            sheet.update({"flags.pf2e-kingmaker-tools.camping-sheet.currentRegion": zoneName})
+            tokenDoc.actor.update({"flags.pf2e-kingmaker-tools.camping-sheet.currentRegion": zoneName})
         }
     }
 })
