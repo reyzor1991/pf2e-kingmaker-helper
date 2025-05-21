@@ -1,3 +1,6 @@
+## Version 0.2.3
+- Fix updating regions
+
 ## Version 0.2.2
 - Add setting - "Add text to icons"
 
