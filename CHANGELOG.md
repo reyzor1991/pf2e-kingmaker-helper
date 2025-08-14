@@ -1,3 +1,6 @@
+## Version 0.3.4
+- Add settings - Hide Prepared campsite icon
+
 ## Version 0.3.3
 - Fix updating regions
 

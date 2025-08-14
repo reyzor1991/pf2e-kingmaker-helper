@@ -196,6 +196,17 @@ Hooks.on('init', function () {
         }
     });
 
+    game.settings.register(moduleName, "hidePreparedCampsiteIcon", {
+        name: "Hide Prepared campsite icon",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean,
+        onChange: value => {
+            game.coloredAndIconsLayer?.draw()
+        }
+    });
+
     game.settings.register(moduleName, "data", {
         scope: "world",
         config: false,
@@ -312,7 +323,7 @@ class ColoredAndIconsLayer extends PIXI.Container {
             }
 
             let createCampsite = additionalData[hex.key];
-            if (createCampsite) {
+            if (createCampsite && !game.settings.get(moduleName, "hidePreparedCampsiteIcon")) {
                 icons.push({
                     image: new PIXI.Sprite(
                         PIXI.Texture.from(ADDITIONAL_ACTIVITIES[createCampsite.result].img)
