@@ -175,6 +175,13 @@ Hooks.on('init', function () {
         default: false,
         type: Boolean
     });
+    game.settings.register(moduleName, "addHoursNumber", {
+        name: "Set hours for move between hexes",
+        scope: "world",
+        config: true,
+        default: 4,
+        type: Number
+    });
 
     game.settings.register(moduleName, "alwaysShowIcon", {
         name: "Always show all icons",
@@ -558,10 +565,12 @@ Hooks.on('preUpdateToken', (tokenDoc, data, options, _userId) => {
         return;
     }
 
+    let hours = game.settings.get(moduleName, "addHoursNumber");
+
     if (options.isUndo) {
-        game.time.advance(-14400)
+        game.time.advance(-1 * hours * 3600)
     } else {
-        game.time.advance(14400)
+        game.time.advance(hours * 3600)
     }
 });
 

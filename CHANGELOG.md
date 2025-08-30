@@ -1,3 +1,6 @@
+## Version 0.3.5
+- Add settings - Set hours for move between hexes
+
 ## Version 0.3.4
 - Add settings - Hide Prepared campsite icon
 
