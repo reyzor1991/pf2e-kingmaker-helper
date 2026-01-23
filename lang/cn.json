@@ -1,0 +1,11 @@
+{
+  "pf2e-kingmaker-helper": {
+    "show-colored-hex": "显示彩色六角格",
+    "FEATURES": {
+      "cs_campsite": "准备营地 (大成功)",
+      "s_campsite": "准备营地 (成功)",
+      "cf_campsite": "准备营地 (大失败)",
+      "f_campsite": "准备营地 (失败)"
+    }
+  }
+}
