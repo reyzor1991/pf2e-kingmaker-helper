@@ -2,7 +2,7 @@
   "id": "pf2e-kingmaker-helper",
   "title": "Pf2e Kingmaker Helper",
   "description": "",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "authors": [
     {
       "name": "Reyzor",
@@ -20,6 +20,11 @@
       "lang": "cn",
       "name": "简体中文",
       "path": "lang/cn.json"
+    },
+    {
+      "lang": "uk",
+      "name": "Українська",
+      "path": "lang/uk.json"
     }
   ],
   "esmodules": [
@@ -31,13 +36,14 @@
   "packFolders": [],
   "packs": [],
   "compatibility": {
-    "minimum": "13.342",
-    "verified": "13.348"
+    "minimum": 14.360,
+    "verified": 14.361,
+    "maximum": 14.999
   },
   "socket": true,
   "url": "https://github.com/reyzor1991/pf2e-wiki/wiki/Pf2e-Kingmaker-Helper",
-  "manifest": "https://www.dropbox.com/scl/fi/nzddonsbwih2e17axy289/module.json?rlkey=ikqs6m95psszri5cgxwcvtehh&st=h213dwux&dl=1",
-  "download": "https://www.dropbox.com/scl/fi/34dv8kuttwdn58okv61pa/pf2e-kingmaker-helper.zip?rlkey=nrcw39daw0xft9zu4dd8xd9z0&st=g5j8q9go&dl=1",
+  "manifest": "https://www.dropbox.com/scl/fi/ipt7268k8i9wn6skzwb4g/module.json?rlkey=xxoe05spiempmr5sbseq8vklz&st=yihgw815&dl=1",
+  "download": "https://www.dropbox.com/scl/fi/qbe4r4madvyskzrwn3y3u/pf2e-kingmaker-helper.zip?rlkey=h9vo8p26cn6ra1pt2hryf9njq&st=2ra0zjqi&dl=1",
   "relationships": {
     "systems": [
       {
@@ -45,8 +51,8 @@
         "type": "system",
         "manifest": "https://github.com/foundryvtt/pf2e/releases/latest/download/system.json",
         "compatibility": {
-          "minimum": "7.0.5",
-          "verified": "7.0.6"
+          "minimum": "8.0.3",
+          "verified": "8.0.3"
         }
       }
     ],

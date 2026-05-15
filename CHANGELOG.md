@@ -1,3 +1,6 @@
+## Version 0.4.0
+- v14
+
 ## Version 0.3.6
 - Add Simplified Chinese localization (AlphaStarguide)
 
