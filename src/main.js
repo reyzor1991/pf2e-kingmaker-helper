@@ -464,12 +464,12 @@ Hooks.on("updateSetting", (setting) => {
     }
 });
 
-Hooks.on("renderKingmakerHexEdit", (form, html, params) => {
-    if (form.object.key) {
+Hooks.on("renderHexEditor", (form, html, params) => {
+    if (form?.options?.hex?.key) {
         let cAct = CampsiteActivities.load();
 
         let data = cAct.data;
-        let find = data.find(d => d.key === form.object.key);
+        let find = data.find(d => d.key === form.options.hex.key);
         if (!find) {
             return
         }
@@ -482,15 +482,15 @@ Hooks.on("renderKingmakerHexEdit", (form, html, params) => {
                 </div>
             </fieldset>
         `
-        html.find('footer').before(newHtml);
-
-        html.on("click", '.remove-aa', async (_e, a) => {
-            $(_e.target).closest('fieldset').remove();
+        html.querySelector('footer').insertAdjacentHTML('beforebegin', newHtml);
+        const button = html.querySelector('.remove-aa');
+        button?.addEventListener('click', async (e) => {
+            e.target.closest('fieldset').remove();
             cAct.updateSource({
-                data: data.filter(d => d.key !== form.object.key)
-            })
-            await cAct.update()
-            game.coloredAndIconsLayer?.draw()
+                data: data.filter(d => d.key !== form.options.hex.key)
+            });
+            await cAct.update();
+            game.coloredAndIconsLayer?.draw();
         });
     }
 });

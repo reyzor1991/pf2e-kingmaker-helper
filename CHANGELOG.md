@@ -1,3 +1,6 @@
+## Version 0.4.1
+- Fix prepare campsite icons
+
 ## Version 0.4.0
 - v14
 
